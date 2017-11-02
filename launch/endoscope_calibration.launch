@@ -1,0 +1,21 @@
+<launch>
+   <arg name="sq_size" default="0.015" doc="square size of the checkerboard pattern"/>
+   <arg name="sq_dims" default="3x5" doc="interior corner count of the checkerboard (e.g. 3x5)"/>
+   <arg name="bar" doc="Someone walks into this."/>
+   <include file="$(find cwru_davinci_camera)/xml/usb_stereo.xml"/>
+   <node name="davinci_endoscope_sync" pkg="cwru_stereo_sync" type="stereo_sync_node" output="screen">
+    <remap from="unsynced/left/image_raw" to="davinci_endo/unsynced/left/image_raw" />
+    <remap from="unsynced/right/image_raw" to="davinci_endo/unsynced/right/image_raw" />
+
+    <remap from="synced/left/image_raw" to="davinci_endo/left/image_raw" />
+    <remap from="synced/right/image_raw" to="davinci_endo/right/image_raw" />
+    </node>
+   <group ns="davinci_endo">
+      <node name="camera_calibration" pkg="camera_calibration" type="cameracalibrator.py" args="--size $(arg sq_dims) --square $(arg sq_size)" >
+      <remap from="right" to="right/image_raw" />
+      <remap from="left" to="left/image_raw" />
+      <remap from="left_camera" to="unsynced/left" />
+      <remap from="right_camera" to="unsynced/right" />
+      </node>
+   </group>
+</launch>

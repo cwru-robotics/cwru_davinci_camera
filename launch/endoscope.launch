@@ -1,0 +1,13 @@
+<launch>
+   <include file="$(find cwru_davinci_camera)/xml/usb_stereo.xml"/>
+   <node name="davinci_endoscope_sync" pkg="cwru_stereo_sync" type="stereo_sync_node" output="screen">
+    <remap from="unsynced/left/image_raw" to="davinci_endo/unsynced/left/image_raw" />
+    <remap from="unsynced/right/image_raw" to="davinci_endo/unsynced/right/image_raw" />
+
+    <remap from="synced/left/image_raw" to="davinci_endo/left/image_raw" />
+    <remap from="synced/right/image_raw" to="davinci_endo/right/image_raw" />
+    </node>
+   <group ns="davinci_endo">
+      <node name="davinci_stereo_proc" pkg="stereo_image_proc" type="stereo_image_proc"/>
+   </group>
+</launch>
