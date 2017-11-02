@@ -1,0 +1,8 @@
+<launch>
+      <node name="davinci_endo_left" pkg="image_view" type="image_view">
+         <remap from="image" to="/davinci_endo/left/image_color" />
+      </node>
+      <node name="davinci_endo_right" pkg="image_view" type="image_view">
+          <remap from="image" to="/davinci_endo/right/image_color" />
+      </node>
+</launch>
